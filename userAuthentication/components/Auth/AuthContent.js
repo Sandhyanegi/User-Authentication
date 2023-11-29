@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
+import {useNavigation} from '@react-navigation/native'
 
 import FlatButton from '../ui/FlatButton';
 import AuthForm from './AuthForm';
 import { Colors } from '../../constants/styles';
 
 function AuthContent({ isLogin, onAuthenticate }) {
+
+  const navigation = useNavigation();
 
   const [credentialsInvalid, setCredentialsInvalid] = useState({
     email: false,
@@ -15,7 +18,11 @@ function AuthContent({ isLogin, onAuthenticate }) {
   });
 
   function switchAuthModeHandler() {
-    // Todo
+    if(isLogin){
+      navigation.navigate('Signup');
+    }else{
+      navigation.navigate('Login');
+    }
   }
 
   function submitHandler(credentials) {
@@ -55,7 +62,8 @@ function AuthContent({ isLogin, onAuthenticate }) {
       />
       <View style={styles.buttons}>
         <FlatButton onPress={switchAuthModeHandler}>
-          {isLogin ? 'Create a new user' : 'Log in instead'}
+          {isLogin ? 'Create a new user' : 'Log in instead'}     
+          {/* if in login page create a new user will be visible */}
         </FlatButton>
       </View>
     </View>
